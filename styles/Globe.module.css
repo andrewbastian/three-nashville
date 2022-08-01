@@ -1,0 +1,7 @@
+.wrapDiv{
+    display:flex;
+}
+.chordDiv{
+    border: 2px solid red;
+    border-radius: 10px;
+}
