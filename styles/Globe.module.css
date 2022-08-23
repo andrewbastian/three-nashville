@@ -1,7 +1,32 @@
 .wrapDiv{
     display:flex;
+    border: 2px dotted blue;
+    width: 100%;
+
+}
+.famDiv{
+    width: 100%;
+    display: flex;
+    padding: 2rem;
+    flex-direction: column;
+    align-items: center;
+    margin: 2rem;
+    border: 2px solid green;
 }
 .chordDiv{
+    width: 10rem;
     border: 2px solid red;
+    padding: 1rem;
     border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin: auto;
+}
+.playChordButton{
+    width: 5rem ;
+    margin: 1rem, auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }

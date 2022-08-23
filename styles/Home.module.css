@@ -1,5 +1,5 @@
 .container {
-  padding: 0 2rem;
+  padding: 0;
 }
 
 .main {
@@ -10,6 +10,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
+}
+.canvasBackgroud{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    pointer-events: none;
 }
 
 .footer {
@@ -28,34 +36,25 @@
   flex-grow: 1;
 }
 
-.title a {
-  color: #0070f3;
-  text-decoration: none;
-}
-
-.title a:hover,
-.title a:focus,
-.title a:active {
-  text-decoration: underline;
-}
 
 .title {
-  margin: 0;
-  line-height: 1.15;
-  font-size: 4rem;
+  margin: auto, 0;
+  display: flex;
+  overflow: visible;
+  width: 75rem;
+  align-items: center;
 }
 
-.title,
-.description {
-  text-align: center;
-}
+.selectContainer{
+    display: flex;
+    justify-content: center;
+    margin-block-start: 2rem;
+    margin-block-end: 2rem;
 
-.description {
-  margin: 4rem 0;
-  line-height: 1.5;
-  font-size: 1.5rem;
 }
-
+.chordsDisplay{
+    height: 50rem;
+}
 .code {
   background: #fafafa;
   border-radius: 5px;

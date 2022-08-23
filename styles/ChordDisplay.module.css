@@ -1,0 +1,65 @@
+.wrapDiv{
+    display:flex;
+    height: 39rem;
+}
+.famDiv{
+    width: 100%;
+    display: flex;
+    padding-inline-end: 2rem;
+    padding-inline-start: 2rem;
+    padding-block-end: 4rem;
+    border-radius: 10rem;
+    flex-direction: column;
+    align-items: center;
+    margin-inline-end: 1rem;
+    margin-inline-start: 1rem;
+}
+.cardCanvas{
+    width: 30rem;
+}
+#tonic{
+    border: 2px solid orange;
+}
+#tonic .playChordButton{
+    border: 2px solid orange;
+}
+#subDom{
+    border: 2px solid teal;
+}
+#subDom .playChordButton{
+    border: 2px solid teal;
+}
+#dom{
+    border: 2px solid hotpink;
+}
+#dom .playChordButton{
+    border: 2px solid hotpink;
+}
+.chordDiv{
+    width: 15rem;
+    padding: .25rem;
+    border-radius: 10px;
+    align-content: center;
+    justify-content: center;
+    display: flex;
+    margin: auto;
+}
+.playChordButton{
+    height: 8rem;
+    width: 8rem;
+}
+.toggleSevens,
+.playChordButton{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+    border-radius: 50%;
+    background: none;
+}
+
+.toggleSevens{
+    margin: auto;
+    margin-top: 0.5em;;
+    padding: 1em;
+}

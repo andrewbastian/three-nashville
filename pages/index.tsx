@@ -1,15 +1,12 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
 import styles from "../styles/Home.module.css";
-import { Selector } from '../components/Selector.tsx';
-import { KeyProvider } from '../context/main-context.tsx';
-import { Key, Progression } from "@tonaljs/tonal";
+import { Background } from "../atoms/Background";
+import { Canvas } from "@react-three/fiber";
+import { Overlay } from "./Overlay";
 
 const Home: NextPage = () => {
-
   return (
-      <KeyProvider>
     <div className={styles.container}>
       <Head>
         <title>Nashville Numbers</title>
@@ -18,33 +15,17 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          <a href="https://en.wikipedia.org/wiki/Nashville_Number_System">The Nashville Numbers Game</a>
-        </h1>
-
-      <Selector/>
-        <div>
-          {/*{harmonicFunctionGroups.T.map((el) => {
-            return <p key={el}>{el}</p>;
-          })}
+        <div className={styles.canvasBackgroud}>
+          <Canvas
+            className={styles.backgroundCanvas}
+            camera={{ position: [0, 0, 1] }}
+          >
+            <Background />
+          </Canvas>
         </div>
-
-        <div>
-          <h2> SubDominant </h2>
-          {harmonicFunctionGroups.SD.map((el) => {
-            return <p key={el}>{el}</p>;
-          })}
-        </div>
-
-        <div>
-          <h2> Dominant </h2>
-          {harmonicFunctionGroups.D.map((el) => {
-            return <p key={el}>{el}</p>;
-          })}*/}
-        </div>
+        <Overlay />
       </main>
     </div>
-      </KeyProvider>
   );
 };
 
