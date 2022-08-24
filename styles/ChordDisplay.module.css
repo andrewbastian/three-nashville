@@ -23,17 +23,29 @@
 #tonic .playChordButton{
     border: 2px solid orange;
 }
+#tonic h2{
+    color: orange;
+    margin-block-start: 2rem;
+}
 #subDom{
     border: 2px solid teal;
 }
 #subDom .playChordButton{
     border: 2px solid teal;
 }
+#subDom h2{
+    color: teal;
+    margin-block-start: 2rem;
+}
 #dom{
     border: 2px solid hotpink;
 }
 #dom .playChordButton{
     border: 2px solid hotpink;
+}
+#dom h2{
+    color: hotpink;
+    margin-block-start: 2rem;
 }
 .chordDiv{
     width: 15rem;

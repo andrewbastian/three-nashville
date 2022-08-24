@@ -23,7 +23,7 @@ export const ChordsDisplay: FC = () => {
     <div className={styles.wrapDiv}>
       {/*{selectedKey? <PlayScale tonicProps={selectedRoot} scaleProps={selectedScale}/>  : null}*/}
       <div className={styles.famDiv} ref={tonicRef} id={styles.tonic}>
-        <h1>Tonic</h1>
+        <h2>Tonic</h2>
         {musicalKey?.tonic.map((el, idx) => {
           return (
             <div key={`${el}${idx}`} className={styles.chordDiv}>
@@ -41,7 +41,7 @@ export const ChordsDisplay: FC = () => {
       </div>
 
       <div className={styles.famDiv} ref={subDomRef} id={styles.subDom}>
-        <h1>SubDom</h1>
+        <h2>SubDominant</h2>
         {musicalKey?.subDom.map((el, idx) => {
           return (
             <div key={`${el}${idx}`} className={styles.chordDiv}>
@@ -58,7 +58,7 @@ export const ChordsDisplay: FC = () => {
         })}
       </div>
       <div className={styles.famDiv} ref={domRef} id={styles.dom}>
-        <h1>Dom</h1>
+        <h2>Dominant</h2>
         {musicalKey?.dom.map((el, idx) => {
           return (
             <div key={`${el}${idx}`} className={styles.chordDiv}>

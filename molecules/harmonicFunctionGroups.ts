@@ -1,4 +1,4 @@
-import { ChordGroupObject } from "../components/types";
+import { ChordGroupObject } from "../types/types";
 import { MajorKey, KeyScale } from "@tonaljs/Key";
 
 export const harmonicFunctionGroups = (sK: MajorKey | KeyScale) => {

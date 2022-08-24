@@ -6,7 +6,7 @@ import {
   createContext,
   useContext,
 } from "react";
-import { ChordGroupObject, Root, CurrCord } from "../components/types";
+import { ChordGroupObject, Root, CurrCord } from "../types/types";
 import { KeyScale, MajorKey, MinorKey } from "@tonaljs/Key";
 import * as Tone from "tone";
 import { harmonicFunctionGroups } from "../molecules/harmonicFunctionGroups";
@@ -46,6 +46,8 @@ const useKeyController = (
   const seqRef = useRef<Tone.Sequence>();
   const drawRef = useRef<typeof Tone.Draw>();
   const scheduleRef = useRef<null | number>();
+    const tremRef = useRef<Tone.Tremolo>()
+    const reverbRef = useRef<Tone.Reverb>()
 
   {
     /*~~~~~~~~~~~~~~~~~~USE_MEMO~~~~~~~~~~~~~~~~~~*/
@@ -147,7 +149,10 @@ const useKeyController = (
       return Chord.getChord(alias, tonicAtFrq).notes;
     };
 
-    const polySynth = new Tone.PolySynth(Tone.AMSynth).toDestination();
+    tremRef.current = new Tone.Tremolo().toDestination();
+      reverbRef.current = new Tone.Reverb().connect(tremRef.current)
+      const polySynth = new Tone.PolySynth(Tone.AMSynth).connect(reverbRef.current);
+      ;
 
     const chordNotesAtfreqs = getChordNotes(chord);
 
@@ -173,28 +178,30 @@ const useKeyController = (
 
   ////////////////////////////////////////////////////
   const playScale = (scale: string, tonic: string) => {
-      console.group("Started PlayScale");
-      console.log("scale:", scale)
-      console.log("tonic:", tonic)
-      
+    console.group("Started PlayScale");
+    console.log("scale:", scale);
+    console.log("tonic:", tonic);
+
     let s = [];
     if (scale === "major") {
       s = Scale.get(`${tonic}4 ${scale}`).notes;
-        s = [...s, `${tonic}5`]
+      s = [...s, `${tonic}5`];
     } else {
       s = Scale.get(`${tonic}4 ${scale} minor`).notes;
     }
 
-console.log("s:", s)
-      console.groupEnd();
+    console.log("s:", s);
+    console.groupEnd();
     const synth = new Tone.Synth().toDestination();
 
     seqRef.current = new Tone.Sequence((time, note) => {
-      {/*Tone.Draw.schedule(() => {
+      {
+        /*Tone.Draw.schedule(() => {
         console.log("time:", time);
         scheduleRef.current = time;
         setScheduleTime(time);
-      }, time);*/}
+      }, time);*/
+      }
       synth.triggerAttackRelease(note, "2n", time);
     }, s).start(0);
     //seqRef.current.debug = true;

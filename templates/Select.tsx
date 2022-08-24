@@ -1,6 +1,7 @@
 import React, { FC, useState, ChangeEvent } from "react";
 import { Key } from "@tonaljs/tonal";
 import { useKey } from "../context/main-context";
+import styles from "../styles/Select.module.css";
 import * as Tone from "tone";
 
 export const Select: FC = () => {
@@ -89,10 +90,16 @@ export const Select: FC = () => {
 
   return (
     <>
-      <div>
-        <h3>Select a Key</h3>
+      <div className={styles.selectMainDiv}>
+        <h3 className={styles.selectTitle}>Select a Key</h3>
         <form onSubmit={handleSubmit}>
-          <select key="root" name="root" id="root" onChange={handleRootChange}>
+          <select
+            className={styles.select}
+            key="root"
+            name="root"
+            id="root"
+            onChange={handleRootChange}
+          >
             {rootOptions.map((r) => {
               return (
                 <option key={r.toString()} defaultValue="A" value={r}>
@@ -102,6 +109,7 @@ export const Select: FC = () => {
             })}
           </select>
           <select
+            className={styles.select}
             key="scale"
             name="scale"
             id="scale"
@@ -115,7 +123,9 @@ export const Select: FC = () => {
               );
             })}
           </select>
-          <button type="submit">Show Me The Chords</button>
+          <button className={styles.selectButton} type="submit">
+            Show Me The Chords
+          </button>
         </form>
       </div>
     </>

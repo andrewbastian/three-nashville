@@ -1,0 +1,12 @@
+.selectMainDiv{
+    text-align: center
+}
+.selectTitle{
+    color:#D3C0D2;
+}
+.selectButton, .select{
+    height: 2rem;
+    margin: 0.5rem;
+    color:#D3C0D2;
+
+}
