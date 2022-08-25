@@ -72,7 +72,7 @@ export interface KyScale {
     chordsHarmonicFunction: readonly string[];
     chordScales?: readonly string[];
 }
-export interface MajKey extends  KeyScale {
+export interface MajKey extends  KyScale {
     type: "major";
     minorRelative?: string;
     scale: readonly string[];
