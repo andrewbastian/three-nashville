@@ -1,58 +1,56 @@
+import { useState, useRef, useMemo, createContext, useContext } from "react";
+
 import {
-  useState,
-  useEffect,
-  useRef,
-  useMemo,
-  createContext,
-  useContext,
-} from "react";
-import { ChordGroupObject, Root, CurrCord } from "../types/types";
-import { KeyScale, MajorKey, MinorKey } from "@tonaljs/Key";
+  ChordGroupObject,
+  Root,
+  CurrCord,
+  MajKey,
+  KyScale,
+} from "../types/types";
+
 import * as Tone from "tone";
-import { harmonicFunctionGroups } from "../molecules/harmonicFunctionGroups";
 import { Chord, Scale } from "@tonaljs/tonal";
 
 import * as THREE from "three";
-import { FontLoader, Font } from "three/examples/jsm/loaders/FontLoader.js";
 
+/*~~~~~~~~~~~~~~~~USE_KEY_CONTROLLER~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 const useKeyController = (
-  musicalKey: MajorKey | MinorKey | null,
-  nextChord: string[] | null
+  musicalKey?: ChordGroupObject | null,
+  nextChord?: string[] | null
 ) => {
-  {
-    /*~~~~~~~~~~~~~~~~STATE~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  }
-
+  /*~~~~~~~~~~~~~~~~STATE~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+  /////////////////THREE_STUFF//////////////////////////
   THREE.Cache.enabled = true;
-  const theoryColors = { T: "#FF7F11", SD: "#26F0F1", D: "#EF476F" };
-
-  const transport = Tone.Transport;
-  const [selectedRoot, setSelectedRoot] = useState<Root>("A");
-  const [selectedScale, setSelectedScale] = useState<
-    "major" | "melodic" | "harmonic" | "natural"
-  >("major");
-  const [selectedKey, setSelectedKey] = useState<MajorKey | KeyScale | null>(
-    null
-  );
-  const [currKeyChords, setCurrKeyChords] = useState<ChordGroupObject | null>();
-  const [selectedChord, setSelectedChord] = useState<CurrCord | null>(null);
-  const [scheduleTime, setScheduleTime] = useState<number | null>(null);
-  const [nextCs, setNextCs] = useState<string[] | null>();
+  const theoryColors: { [key: string]: string } = {
+    T: "#FF7F11",
+    SD: "#26F0F1",
+    D: "#EF476F",
+  };
   const colorRef = useRef<string | null>();
 
+  /////////////////TONEAL/THEORY_STUFF//////////////////////////
+  const [selectedRoot, setSelectedRoot] = useState<Root>("A");
+  const [selectedScale, setSelectedScale] = useState<string>("major");
+  const [selectedKey, setSelectedKey] = useState<MajKey | KyScale | null>(null);
+  const [currKeyChords, setCurrKeyChords] = useState<ChordGroupObject | null>();
+  const [selectedChord, setSelectedChord] = useState<CurrCord | null>(null);
+  const [nextCs, setNextCs] = useState<string[] | null>();
+
   const selectedChordRef = useRef<CurrCord | null>(null);
-  const selectedKeyRef = useRef<MajorKey | KeyScale | null>();
+  const selectedKeyRef = useRef<MajKey | KyScale | null>(null);
+
+  /////////////////TONEJS_STUFF//////////////////////////
+  const [scheduleTime, setScheduleTime] = useState<number | null>(null);
+  const transport = Tone.Transport;
   const chordEventRef = useRef<Tone.ToneEvent>();
   const seqRef = useRef<Tone.Sequence>();
   const drawRef = useRef<typeof Tone.Draw>();
   const scheduleRef = useRef<null | number>();
-    const tremRef = useRef<Tone.Tremolo>()
-    const reverbRef = useRef<Tone.Reverb>()
+  const tremRef = useRef<Tone.Tremolo>();
+  const reverbRef = useRef<Tone.Reverb>();
 
-  {
-    /*~~~~~~~~~~~~~~~~~~USE_MEMO~~~~~~~~~~~~~~~~~~*/
-  }
-
+  /*~~~~~~~~~~~~~~~~~~USE_MEMO~~~~~~~~~~~~~~~~~~*/
+  ///////////////FILTER_DATA_INTO_GROUPS_4_DISPLAY/////////////////////
   const filterCurrChords = useMemo(() => {
     if (selectedKeyRef.current) {
       let res = selectedKeyRef.current.chords.reduce<ChordGroupObject>(
@@ -95,6 +93,7 @@ const useKeyController = (
     }
   }, [selectedKeyRef.current, selectedKey, currKeyChords]);
 
+  ///////////////FILTER_NEXT_CHORD_OPTIONS/////////////////////
   const filterNextChords = useMemo(() => {
     console.group("FilterNext");
 
@@ -138,9 +137,9 @@ const useKeyController = (
     console.log("nextCs:", nextCs);
     return nextCs;
   }, [selectedChordRef.current, selectedChord]);
-  {
-    /*~~~~~~~~~~~~~~~~~~TONEJS~~~~~~~~~~~~~~~~~~*/
-  }
+
+  /*~~~~~~~~~~~~~~~~~~TONEJS~~~~~~~~~~~~~~~~~~*/
+  ///////////////PLAY_SYNTH_OF_SELECTED_CHORD/////////////////////
   const playPolySynth = (chord: string) => {
     const getChordNotes = (c: string) => {
       const chordObj = Chord.get(c);
@@ -150,10 +149,10 @@ const useKeyController = (
     };
 
     tremRef.current = new Tone.Tremolo().toDestination();
-      reverbRef.current = new Tone.Reverb().connect(tremRef.current)
-      const polySynth = new Tone.PolySynth(Tone.AMSynth).connect(reverbRef.current);
-      ;
-
+    reverbRef.current = new Tone.Reverb().connect(tremRef.current);
+    const polySynth = new Tone.PolySynth(Tone.AMSynth).connect(
+      reverbRef.current
+    );
     const chordNotesAtfreqs = getChordNotes(chord);
 
     chordEventRef.current = new Tone.ToneEvent((time, chord) => {
@@ -176,12 +175,8 @@ const useKeyController = (
     }
   };
 
-  ////////////////////////////////////////////////////
+  ///////////////PLAY_SYNTH_OF_SELECTED_SCALE/////////////////////
   const playScale = (scale: string, tonic: string) => {
-    console.group("Started PlayScale");
-    console.log("scale:", scale);
-    console.log("tonic:", tonic);
-
     let s = [];
     if (scale === "major") {
       s = Scale.get(`${tonic}4 ${scale}`).notes;
@@ -190,8 +185,6 @@ const useKeyController = (
       s = Scale.get(`${tonic}4 ${scale} minor`).notes;
     }
 
-    console.log("s:", s);
-    console.groupEnd();
     const synth = new Tone.Synth().toDestination();
 
     seqRef.current = new Tone.Sequence((time, note) => {
@@ -206,18 +199,14 @@ const useKeyController = (
     }, s).start(0);
     //seqRef.current.debug = true;
     seqRef.current.loop = false;
-    //seqRef.current.loopEnd = 2;
-    //seqRef.current.humanize = true;
     transport.start();
     if (seqRef.current.state === "stopped") {
       //seqRef.current.dispose();
-      //synth.dispose();
       //transport.dispose();
     }
   };
-  {
-    /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-  }
+
+  /*~~~~~~~~~~~~~~~~~~~~CONTROLER_RETURNS~~~~~~~~~~~~~~~~~~~~~~~~~*/
   return {
     theoryColors,
     colorRef,
@@ -247,9 +236,7 @@ const useKeyController = (
   };
 };
 
-{
-  /*~~~~~~~~~~~~~~~~~~~KEY_CONTEXT~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-}
+/*~~~~~~~~~~~~~~~~~~~KEY_CONTEXT~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 const KeyContext = createContext<ReturnType<typeof useKeyController>>({
   theoryColors: { T: "#FF7F11", SD: "#26F0F1", D: "#EF476F" },
   colorRef: { current: null },
@@ -278,16 +265,16 @@ const KeyContext = createContext<ReturnType<typeof useKeyController>>({
   nextChord: [],
 });
 
-{
-  /*~~~~~~~~~~~~~~~~~~~KEY_PROVIDER~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-}
-export const KeyProvider = ({ musicalKey, nextChord, children }) => (
+/*~~~~~~~~~~~~~~~~~~~KEY_PROVIDER~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+export const KeyProvider: React.FunctionComponent<{
+  musicalKey: ChordGroupObject;
+  nextChord: string[];
+  children: JSX.Element;
+}> = ({ musicalKey, nextChord, children }) => (
   <KeyContext.Provider value={useKeyController(musicalKey, nextChord)}>
     {children}
   </KeyContext.Provider>
 );
 
-{
-  /*~~~~~~~~~~~~~~~~~~~EXPORT~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-}
+/*~~~~~~~~~~~~~~~~~~~EXPORT~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 export const useKey = () => useContext(KeyContext);
