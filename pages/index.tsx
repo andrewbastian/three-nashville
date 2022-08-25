@@ -3,7 +3,7 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { Background } from "../atoms/Background";
 import { Canvas } from "@react-three/fiber";
-import { Overlay } from "./Overlay";
+import { Overlay } from "../molecules/Overlay";
 
 const Home: NextPage = () => {
   return (
