@@ -8,6 +8,7 @@ import { dankFont } from "../atoms/getDankFont";
 import { Canvas } from "@react-three/fiber";
 
 import { Text3D, Center, Float } from "@react-three/drei";
+import { CurrCord } from "../types/types";
 
 {
   /*~~~~~~~~~~~~TYPES~~~~~~~~~~~~~~~~~*/
@@ -17,7 +18,7 @@ interface ChordProps {
   chordsHarmonicFunction: string;
   grade: string;
   notes: string[];
-  selectedChord: string;
+  selectedChord: CurrCord | null;
   chordButtonRef: React.ForwardedRef<HTMLButtonElement>;
 }
 

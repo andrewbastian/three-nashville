@@ -52,7 +52,7 @@ export const Select: FC = () => {
       Object.entries(Key.minorKey(selectedRoot)).map((v) => {
         minorKeyMap.set(v[0], v[1]);
       });
-      const res = minorKeyMap.get(`${selectedScale}`);
+      const res = minorKeyMap.get(selectedScale);
 
       setSelectedKey(res);
       selectedKeyRef.current = selectedKey;

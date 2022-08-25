@@ -4,7 +4,7 @@ import * as THREE from 'three'
 import { Points, PointMaterial } from '@react-three/drei';
 import * as random from "maath/random";
 
-export const Background =(props: any)=> {
+export const Background: FC =(props: any)=> {
 
     //TODO: Change Color based on selected chord
     const [color, setColor] = useState('#D3C0D2')
