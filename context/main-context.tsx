@@ -37,7 +37,7 @@ const useKeyController = (
   const [nextCs, setNextCs] = useState<string[] | null>();
 
   const selectedChordRef = useRef<CurrCord | null>(null);
-  const selectedKeyRef = useRef<MajKey | KyScale | null>(null);
+  const selectedKeyRef = useRef< KyScale | null>(null);
 
   /////////////////TONEJS_STUFF//////////////////////////
   const [scheduleTime, setScheduleTime] = useState<number | null>(null);
@@ -53,7 +53,7 @@ const useKeyController = (
   ///////////////FILTER_DATA_INTO_GROUPS_4_DISPLAY/////////////////////
   const filterCurrChords = useMemo(() => {
     if (selectedKeyRef.current) {
-      let res = selectedKeyRef.current.chords.reduce<ChordGroupObject>(
+      let res = selectedKeyRef.current?.chords.reduce<ChordGroupObject>(
         (lookup: ChordGroupObject, value: string, idx) => {
           selectedKeyRef.current?.chordsHarmonicFunction[idx] === "T"
             ? lookup.tonic.push({
