@@ -2,23 +2,21 @@ import React, { FC, useState, ChangeEvent } from "react";
 import { Key } from "@tonaljs/tonal";
 import { useKey } from "../context/main-context";
 import styles from "../styles/Select.module.css";
-import * as Tone from "tone";
+//import * as Tone from "tone";
 
 export const Select: FC = () => {
-  {
-    /*_____STATE_&_CONTEXT____*/
-  }
-
+  /*_____STATE_&_CONTEXT____*/
   ///////////////////////////////////////////
   const {
     selectedScale,
     selectedRoot,
+    selectedKey,
     setSelectedScale,
     setSelectedRoot,
     setSelectedKey,
     selectedKeyRef,
-    playScale,
-    transport,
+    //playScale,
+    //transport,
   } = useKey();
   ///////////////////////////////////////////
   const rootOptions: string[] = [
@@ -36,7 +34,7 @@ export const Select: FC = () => {
     "G#",
   ];
   ///////////////////////////////////////////
-  const scaleValues = {
+  const scaleValues: { [key: string]: string } = {
     major: "major",
     harmonic: "harmonic",
     melodic: "melodic",
@@ -45,17 +43,19 @@ export const Select: FC = () => {
   ///////////////////////////////////////////
   const [isMajor, setIsMajor] = useState(true);
 
-  {
-    /*__________HANDLERS___________*/
-  }
-
+  /*__________HANDLERS___________*/
   ///////////////////////////////////////////
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     if (selectedScale === "melodic" || "natural" || "harmonic") {
-      let keyInfo = Key.minorKey(selectedRoot);
-      selectedKeyRef.current = keyInfo[selectedScale];
-      setSelectedKey(keyInfo[selectedScale]);
+      const minorKeyMap = new Map();
+      Object.entries(Key.minorKey(selectedRoot)).map((v) => {
+        minorKeyMap.set(v[0], v[1]);
+      });
+      const res = minorKeyMap.get(`${selectedScale}`);
+
+      setSelectedKey(res);
+      selectedKeyRef.current = selectedKey;
       //TODO: Think this needs a clean up handler after sequence has fired
       //Tone.start()
       //playScale(selectedScale, selectedRoot);
@@ -84,9 +84,7 @@ export const Select: FC = () => {
     }
   };
 
-  {
-    /*____JSX_____*/
-  }
+  /*____JSX_____*/
 
   return (
     <>
