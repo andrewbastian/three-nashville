@@ -18,8 +18,8 @@ interface ChordProps {
   chordsHarmonicFunction: string;
   grade: string;
   notes: string[];
-  selectedChord: CurrCord | null;
-  chordButtonRef: React.ForwardedRef<HTMLButtonElement>;
+  selectedChord?: CurrCord | null;
+  chordButtonRef?: React.ForwardedRef<HTMLButtonElement>;
 }
 
 {
