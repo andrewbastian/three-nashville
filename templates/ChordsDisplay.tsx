@@ -9,7 +9,7 @@ export const ChordsDisplay: FC = () => {
     /*______________CONTEXT_&_REFS________________*/
   }
   ///////////////////CONTEXT////////////////////////
-  const { selectedChord, setSelectedChord, musicalKey } = useKey();
+  const { selectedChord,  musicalKey } = useKey();
 
   ///////////////////REFS////////////////////////
   const tonicRef = useRef<HTMLDivElement>(null!);
@@ -32,7 +32,6 @@ export const ChordsDisplay: FC = () => {
                 notes={Chord.get(el.chord).notes}
                 grade={el.grade!}
                 chordsHarmonicFunction={el.functionGroup!}
-                setSelectedChord={setSelectedChord}
                 selectedChord={selectedChord}
               />
             </div>
@@ -50,7 +49,6 @@ export const ChordsDisplay: FC = () => {
                 notes={Chord.get(el.chord).notes}
                 grade={el.grade!}
                 chordsHarmonicFunction={el.functionGroup!}
-                setSelectedChord={setSelectedChord}
                 selectedChord={selectedChord}
               />
             </div>
@@ -67,7 +65,6 @@ export const ChordsDisplay: FC = () => {
                 notes={Chord.get(el.chord).notes}
                 grade={el.grade!}
                 chordsHarmonicFunction={el.functionGroup!}
-                setSelectedChord={setSelectedChord}
                 selectedChord={selectedChord}
               />
             </div>
