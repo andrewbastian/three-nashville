@@ -104,11 +104,19 @@
   margin-left: 0.5rem;
 }
 
-@media (max-width: 600px) {
-  .grid {
-    width: 100%;
+@media (max-width: 700px) {
+
+.title {
+  width: 55rem;
+  align-items: center;
+}
+.selectContainer{
+    display: flex;
     flex-direction: column;
-  }
+}
+.chordsDisplay{
+    width:100%;
+}
 }
 
 @media (prefers-color-scheme: dark) {

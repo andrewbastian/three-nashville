@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef } from "react";
+import React, { FC, useRef } from "react";
 import { ChordCard } from "../organisms/ChordCard";
 import { Chord } from "@tonaljs/tonal";
 import styles from "../styles/ChordDisplay.module.css";
@@ -9,7 +9,7 @@ export const ChordsDisplay: FC = () => {
     /*______________CONTEXT_&_REFS________________*/
   }
   ///////////////////CONTEXT////////////////////////
-  const { selectedChord,  musicalKey } = useKey();
+  const { selectedChord, musicalKey } = useKey();
 
   ///////////////////REFS////////////////////////
   const tonicRef = useRef<HTMLDivElement>(null!);
@@ -24,52 +24,58 @@ export const ChordsDisplay: FC = () => {
       {/*{selectedKey? <PlayScale tonicProps={selectedRoot} scaleProps={selectedScale}/>  : null}*/}
       <div className={styles.famDiv} ref={tonicRef} id={styles.tonic}>
         <h2>Tonic</h2>
-        {musicalKey?.tonic.map((el, idx) => {
-          return (
-            <div key={`${el}${idx}`} className={styles.chordDiv}>
-              <ChordCard
-                chord={el.chord}
-                notes={Chord.get(el.chord).notes}
-                grade={el.grade!}
-                chordsHarmonicFunction={el.functionGroup!}
-                selectedChord={selectedChord}
-              />
-            </div>
-          );
-        })}
+        <div className={styles.chordsContainer}>
+          {musicalKey?.tonic.map((el, idx) => {
+            return (
+              <div key={`${el}${idx}`} className={styles.chordDiv}>
+                <ChordCard
+                  chord={el.chord}
+                  notes={Chord.get(el.chord).notes}
+                  grade={el.grade!}
+                  chordsHarmonicFunction={el.functionGroup!}
+                  selectedChord={selectedChord}
+                />
+              </div>
+            );
+          })}
+        </div>
       </div>
 
       <div className={styles.famDiv} ref={subDomRef} id={styles.subDom}>
         <h2>SubDominant</h2>
-        {musicalKey?.subDom.map((el, idx) => {
-          return (
-            <div key={`${el}${idx}`} className={styles.chordDiv}>
-              <ChordCard
-                chord={el.chord}
-                notes={Chord.get(el.chord).notes}
-                grade={el.grade!}
-                chordsHarmonicFunction={el.functionGroup!}
-                selectedChord={selectedChord}
-              />
-            </div>
-          );
-        })}
+        <div className={styles.chordsContainer}>
+          {musicalKey?.subDom.map((el, idx) => {
+            return (
+              <div key={`${el}${idx}`} className={styles.chordDiv}>
+                <ChordCard
+                  chord={el.chord}
+                  notes={Chord.get(el.chord).notes}
+                  grade={el.grade!}
+                  chordsHarmonicFunction={el.functionGroup!}
+                  selectedChord={selectedChord}
+                />
+              </div>
+            );
+          })}
+        </div>
       </div>
       <div className={styles.famDiv} ref={domRef} id={styles.dom}>
         <h2>Dominant</h2>
-        {musicalKey?.dom.map((el, idx) => {
-          return (
-            <div key={`${el}${idx}`} className={styles.chordDiv}>
-              <ChordCard
-                chord={el.chord}
-                notes={Chord.get(el.chord).notes}
-                grade={el.grade!}
-                chordsHarmonicFunction={el.functionGroup!}
-                selectedChord={selectedChord}
-              />
-            </div>
-          );
-        })}
+        <div className={styles.chordsContainer}>
+          {musicalKey?.dom.map((el, idx) => {
+            return (
+              <div key={`${el}${idx}`} className={styles.chordDiv}>
+                <ChordCard
+                  chord={el.chord}
+                  notes={Chord.get(el.chord).notes}
+                  grade={el.grade!}
+                  chordsHarmonicFunction={el.functionGroup!}
+                  selectedChord={selectedChord}
+                />
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

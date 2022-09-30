@@ -54,12 +54,12 @@ export const Overlay: FC = () => {
         </Canvas>
       </div>
       <div className={styles.selectContainer}>
-        <Select />
         {selectedKey ? (
           <div className={styles.chordsDisplay}>
             <ChordsDisplay />
           </div>
         ) : null}
+        <Select />
       </div>
     </div>
   );

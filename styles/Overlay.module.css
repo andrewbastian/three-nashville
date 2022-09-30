@@ -12,3 +12,19 @@
     display: flex;
     align-items: center;
 }
+@media (max-width: 700px) {
+  .grid {
+    width: 100%;
+    flex-direction: column;
+  }
+.title {
+  width: 55rem;
+  align-items: center;
+}
+.selectContainer{
+    outline: 2px dotted green;
+    position: absolute;
+
+}
+}
+
